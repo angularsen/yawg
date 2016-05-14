@@ -2,7 +2,7 @@
   "name": "yawg",
   "version": "1.0.0",
   "description": "Yet Another Word Generator - Node CLI to generate XKCD inspired passwords, using common English words that are easy to spell",
-  "repository": "https://"
+  "repository": "https://github.com/anjdreas/yawg",
   "main": "app.js",
   "author": {
     "name": "Andreas Gullberg Larsen",
