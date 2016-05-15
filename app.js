@@ -15,7 +15,7 @@ var argv = parseArgs(process.argv.slice(2),
     string: [ 'delimiter' ],
     boolean: true, // treat all '--myArg' args without values as boolean args
     alias: {n: "count", h: "help" },
-    default: { delimiter: ' ', minWords: 2, maxWords: 4, minLength: 8, maxLength: 15, minWordLength: 2, maxWordLength: 10, attempts: 100, greedy: false, n: 10, h: false }
+    default: { delimiter: ' ', minWords: 2, maxWords: 4, minLength: 8, maxLength: 15, minWordLength: 3, maxWordLength: 10, attempts: 100, greedy: false, n: 10, h: false }
 });
 
 var { minWords, maxWords, minLength, maxLength, minWordLength, maxWordLength, count, help } = argv;
@@ -31,7 +31,7 @@ Optional parameters:
 --maxWords=4        Max number of words
 --minLength=8       Min length of phrase
 --maxLength=15      Max length of phrase
---minWordLength=2   Min word length
+--minWordLength=3   Min word length
 --maxWordLength=10  Max word length
 --attempts=100      Max attempts per phrase
 --greedy=false      Try to maximize phrase length
