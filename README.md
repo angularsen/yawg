@@ -1,3 +1,24 @@
+#### Install
+`$ npm install -g yawg`
+
+then run it
+
+`$ yawg`
+
+```
+aspect enabled
+orleans over
+expansion gem
+drinks luxury
+claim domain
+sentence link
+stationery dans
+chronicles ppc
+agency then
+stock dominant
+```
+
+
 #### Options
 `$ yawg -h`
 
@@ -22,22 +43,6 @@ Optional parameters:
     alias: -n
 --help              Show this screen
     alias: -h
-```
-
-#### Default arguments
-`$ yawg`
-
-```
-aspect enabled
-orleans over
-expansion gem
-drinks luxury
-claim domain
-sentence link
-stationery dans
-chronicles ppc
-agency then
-stock dominant
 ```
 
 #### Copy to clipboard
