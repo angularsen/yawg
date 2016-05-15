@@ -82,8 +82,8 @@ require('readline')
         debug('Done reading word list.');
 
         for (let i = 0; i < count; i++) {
-            const password = getPassword();
-            console.log(`${password}`);
+            const phrase = getPassword();
+            console.log(`${phrase}`);
         }
     });
 
@@ -91,7 +91,7 @@ function getPassword() {
     const currentWords = [];
     var { delimiter, minWords, maxWords, minLength, maxLength, minWordLength, maxWordLength, attempts, greedy } = argv;
 
-    // Up to N attempts at generating a password, to avoid infinite loop
+    // Up to N attempts at generating a phrase, to avoid infinite loop
     for (let i = 0; i < attempts; i++) {
         const randomLineIndex = randomInt(0, Words.length);
         const word = Words[randomLineIndex];
@@ -115,7 +115,7 @@ function getPassword() {
         } else if (attemptedWords.length > maxWords) {
             debug(`${messagePrefix}: Too many words, ${attemptedWords.length} of ${maxWords}`);
         } else if (length < minLength) {
-            debug(`${messagePrefix}: Word OK, but password too short, ${length} of ${minLength}`);
+            debug(`${messagePrefix}: Word OK, but phrase too short, ${length} of ${minLength}`);
             currentWords.push(word);
         } else if (attemptedWords.length < minWords) {
             debug(`${messagePrefix}: Word OK, but too few words, ${attemptedWords.length} of ${minWords}`);
@@ -129,7 +129,7 @@ function getPassword() {
         }
     }
 
-    throw new Error('Failed to generate password.');
+    throw new Error('Failed to generate phrase.');
 }
 
 function randomInt(low, high) {
