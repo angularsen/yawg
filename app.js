@@ -83,7 +83,7 @@ require('readline')
 
         for (let i = 0; i < count; i++) {
             const phrase = getPassword();
-            console.log(`${phrase}`);
+            console.log(`${phrase || "(failed)"}`);
         }
     });
 
@@ -129,7 +129,8 @@ function getPassword() {
         }
     }
 
-    throw new Error('Failed to generate phrase.');
+    debug('Failed to generate phrase.');
+    return null;
 }
 
 function randomInt(low, high) {
