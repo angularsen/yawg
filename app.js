@@ -2,13 +2,15 @@
 
 'use strict';
 
-const dictionaryFilePath = './dictionary/first20hours/2014-12-17-google-10000-english-usa.txt';
 
 var parseArgs = require('minimist');
 var fs = require('fs');
 var debug = require('debug')('pwer');
 var _ = require('underscore');
 var util = require('util');
+var path = require('path');
+
+let dictionaryFilePath = path.join(__dirname, './dictionary/first20hours/2014-12-17-google-10000-english-usa.txt');
 
 var argv = parseArgs(process.argv.slice(2),
 {
