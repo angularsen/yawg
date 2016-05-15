@@ -19,7 +19,7 @@ var argv = parseArgs(process.argv.slice(2),
     string: [ 'delimiter' ],
     boolean: true, // treat all '--myArg' args without values as boolean args
     alias: {n: "count", h: "help" },
-    default: { delimiter: ' ', minWords: 2, maxWords: 4, minLength: 8, maxLength: 15, minWordLength: 3, maxWordLength: 10, attempts: 1e4, greedy: false, n: 10, h: false }
+    default: { delimiter: ' ', minWords: 2, maxWords: 4, minLength: 8, maxLength: 15, minWordLength: 2, maxWordLength: 10, attempts: 1e4, greedy: false, n: 10, h: false }
 });
 
 var { minWords, maxWords, minLength, maxLength, minWordLength, maxWordLength, count, help } = argv;
