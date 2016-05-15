@@ -1,4 +1,6 @@
-﻿'use strict';
+﻿#!/usr/bin/env node --harmony_destructuring
+
+'use strict';
 
 const dictionaryFilePath = './dictionary/first20hours/2014-12-17-google-10000-english-usa.txt';
 
