@@ -36,9 +36,9 @@ Optional parameters:
 --maxWords=4        Max number of words
 --minLength=8       Min length of phrase
 --maxLength=15      Max length of phrase
---minWordLength=3   Min word length
+--minWordLength=2   Min word length
 --maxWordLength=10  Max word length
---attempts=100      Max attempts per phrase
+--attempts=1e4      Max attempts per phrase
 --greedy=false      Try to maximize phrase length
 --count=10          Number of phrases to generate
     alias: -n       
