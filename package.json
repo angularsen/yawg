@@ -5,6 +5,7 @@
   "repository": "https://github.com/anjdreas/yawg",
   "main": "app.js",
   "license": "MIT",
+  "keywords": [ "random", "words", "password", "xkcd", "phrase", "generator", "cli", "util" ],
   "author": {
     "name": "Andreas Gullberg Larsen",
     "email": "anjdreas@gmail.com"
