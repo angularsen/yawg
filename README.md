@@ -1,3 +1,4 @@
+#### Options
 `$ yawg -h`
 
 ```
@@ -23,6 +24,7 @@ Optional parameters:
     alias: -h
 ```
 
+#### Default arguments
 `$ yawg`
 
 ```
@@ -57,4 +59,4 @@ invoice junk holland iron
 ion ukraine soap beth
 ```
 
-Without specifying a longer maxLength, you will typically run into an error generating passwords as it is not able to find 4 words to fit in the default 15 maxLength. You could try increasing `attempts` from 100 to a larger value.
+Without specifying a longer maxLength, you will typically run into failed attempts of generating phrases when it is not able to find 4 words to fit in the default maxLength of 15. You could also try increasing `attempts` to a larger value.
