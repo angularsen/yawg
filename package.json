@@ -14,6 +14,9 @@
     "minimist": "^1.2.0",
     "underscore": "^1.8.3"
   },
+  "scripts": {
+    "patch-release": "npm version patch && npm publish && git push --follow-tags"
+  },
   "bin": {
     "yawg": "app.js"
   }
