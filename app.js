@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env node --harmony_destructuring
+﻿#!/usr/bin/env node
 
 'use strict';
 
@@ -41,9 +41,9 @@ Optional parameters:
 --attempts=1e4      Max attempts per phrase
 --greedy=false      Try to maximize phrase length
 --count=10          Number of phrases to generate
-    alias: -n       
+    alias: -n
 --help              Show this screen
-    alias: -h       
+    alias: -h
 `);
     return;
 }
@@ -102,7 +102,7 @@ function getPassword() {
         const attemptedPassword = _.reduce(attemptedWords,
                 (memo, currentWord) => memo + delimiter + currentWord,
                 "")
-            .substring(delimiter.length); 
+            .substring(delimiter.length);
 
         const length = attemptedPassword.length;
         const messagePrefix = `Attempt #${i + 1}: ${attemptedPassword} (${length})`;
