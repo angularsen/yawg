@@ -25,7 +25,7 @@ stock dominant
 ```
 yawg - Yet Another Word Generator
 
-version: 1.0.2
+version: 1.1.0
 
 Required parameters: (none)
 
@@ -65,3 +65,28 @@ ion ukraine soap beth
 ```
 
 Without specifying a longer maxLength, you will typically run into failed attempts of generating phrases when it is not able to find 4 words to fit in the default maxLength of 15. You could also try increasing `attempts` to a larger value.
+
+#### Node API
+You can require this package in your NodeJS code and pass in the options as an
+object argument.
+
+Example:
+```js
+'use strict';
+
+var yawg = require('yawg');
+
+try {
+    var password = yawg({
+        minWords: 4,
+        maxLength: 50,
+        attempts: 100,
+    });
+    console.log('Password is ' + password);
+} catch (err) {
+    // handle error here
+    // either a problem with the provided options
+    // or a password couldn't be generated after the
+    // given number of attempts
+}
+```

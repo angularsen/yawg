@@ -1,9 +1,9 @@
 {
   "name": "yawg",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "description": "Yet Another Word Generator - Node CLI to generate XKCD inspired passwords, using common English words that are easy to spell",
   "repository": "https://github.com/anjdreas/yawg",
-  "main": "app.js",
+  "main": "lib.js",
   "license": "MIT",
   "keywords": [
     "random",
@@ -25,7 +25,8 @@
     "underscore": "^1.8.3"
   },
   "scripts": {
-    "patch-release": "npm version patch && npm publish && git push --follow-tags"
+    "patch-release": "npm version patch && npm publish && git push --follow-tags",
+    "test": "node test.js"
   },
   "bin": {
     "yawg": "app.js"
