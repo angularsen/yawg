@@ -46,7 +46,7 @@ Optional parameters:
 ```
 
 #### Copy to clipboard
-`$ yawg | clip` puts "prediction mat" in clipboard
+`$ yawg -n 1 | clip` puts "prediction mat" in clipboard
 
 #### Longer phrases
 `$ yawg --minWords=4 --maxLength=40`
