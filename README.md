@@ -13,7 +13,7 @@ Then run it:
 
 ```
 $ yawg
-register office windows
+cheese packet wish
 ```
 
 ### Parameters
