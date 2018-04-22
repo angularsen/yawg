@@ -1,134 +1,105 @@
 'use strict';
 
-var fs = require('fs');
-var debug = require('debug')('pwer');
-var _ = require('underscore');
-var util = require('util');
-var path = require('path');
+const fs = require('fs');
+const debug = require('debug')('yawg');
+const _ = require('underscore');
+const util = require('util');
+const path = require('path');
 
-var defaults = {
-    delimiter: ' ',
-    minWords: 2,
-    maxWords: 4,
-    minLength: 8,
-    maxLength: 15,
-    minWordLength: 2,
-    maxWordLength: 10,
-    attempts: 1e4,
-    greedy: false,
-    n: 10,
-    h: false,
+const defaultOpts = {
+  delimiter: ' ',
+  minLength: 12,
+  maxLength: 25,
+  minWords: 3,
+  maxWords: 5,
+  minWordLength: 1,
+  maxWordLength: 8,
+  attempts: 1e4,
 };
 
 // Note, this reads a dictionary file with one word on each line into
 // an array. It's not very memory efficient. It would be best to use
 // this package in command-line scripts or a stand-alone service
 // so it doesn't bloat your main application.
-var dictionaryFilePath = path.join(
-    __dirname, 'dictionary', 'first20hours',
-    '2014-12-17-google-10000-english-usa.txt'
-);
-var words = fs.readFileSync(dictionaryFilePath).toString().split("\n");
+const dictionaryFilePath = path.join(__dirname, 'dictionary/first20hours/2014-12-17-google-10000-english-usa.txt');
+const words = fs.readFileSync(dictionaryFilePath).toString().split("\n");
 
-function validateOptions(options) {
-  var minWords = options.minWords;
-  var minLength = options.minLength;
-  var minWordLength = options.minWordLength;
-  var maxWords = options.maxWords;
-  var maxLength = options.maxLength;
-  var maxWordLength = options.maxWordLength;
-
-  if (minWords < 1)
-      throw new Error('minWords must be greater than zero.');
-  if (minLength < 1)
-      throw new Error('minWords must be greater than zero.');
-  if (minWordLength < 1)
-      throw new Error('minWordLength must be greater than zero.');
-
-  if (maxWords < minWords)
-      throw new Error('maxWords must be greater than minWords.');
-  if (maxLength < minLength)
-      throw new Error('maxLength must be greater than minLength.');
-  if (maxWordLength < minWordLength)
-      throw new Error('maxWordLength must be greater than minWordLength.');
-
-  if (maxWordLength > maxLength)
-      throw new Error('maxWordLength should not be greater than maxLength.');
-  if (minWordLength > maxLength)
-      throw new Error('minWordLength should not be greater than maxLength.');
+function isString(obj) {
+  return (typeof obj === 'string' || obj instanceof String);
 }
 
-function randomInt(low, high) {
-    return Math.floor(Math.random() * (high - low) + low);
+function ensureInt(obj, paramName) {
+  if (!Number.isInteger(obj)) throw new Error(`Parameter [${paramName}] should be an integer, was [${obj}] of type [${typeof (obj)}].`)
 }
 
-function yawg(options, cb) {
-    var params = {};
-    var currentWords = [];
-    var i;
-    var randomLineIndex;
-    var word;
-    var attemptedWords;
-    var attemptedPassword;
-    var length;
-    var messagePrefix;
-    var delimiter;
-    var minWords;
-    var maxWords;
-    var minLength;
-    var maxLength;
-    var minWordLength;
-    var maxWordLength;
-    var attempts;
-    var greedy;
+function ensureString(obj, paramName) {
+  if (!isString(obj)) throw new Error(`Parameter [${paramName}] should be a string, was [${obj}] of type [${typeof (obj)}].`)
+}
 
-    _.extendOwn(params, defaults, options);
+function validateOptions(opts) {
 
-    delimiter = params.delimiter;
-    minWords = params.minWords;
-    maxWords = params.maxWords;
-    minLength = params.minLength;
-    maxLength = params.maxLength;
-    minWordLength = params.minWordLength;
-    maxWordLength = params.maxWordLength;
-    attempts = params.attempts;
-    greedy = params.greedy;
+  const { delimiter, minWords, minLength, minWordLength, attempts } = opts;
 
-    // Up to N attempts at generating a phrase, to avoid infinite loop
-    for (i = 0; i < attempts; i++) {
-        randomLineIndex = randomInt(0, words.length);
-        word = words[randomLineIndex];
+  ensureString(delimiter, 'delimiter');
+  ensureInt(minWords, 'minWords');
+  ensureInt(minLength, 'minLength');
+  ensureInt(minWordLength, 'minWordLength');
 
-        attemptedWords = currentWords.concat(word);
-        attemptedPassword = attemptedWords.join(delimiter);
-        length = attemptedPassword.length;
-        messagePrefix = 'Attempt #' + (i + 1) + ': ' + attemptedPassword + ' (' + length + ')';
+  // Not const, these may be manipulated below
+  ensureInt(opts.maxWords, 'maxWords');
+  ensureInt(opts.maxLength, 'maxLength');
+  ensureInt(opts.maxWordLength, 'maxWordLength');
 
-        if (word.length < minWordLength) {
-            debug(messagePrefix + ': Word too short, ' + word.length + ' of ' + minWordLength);
-        } else if (word.length > maxWordLength) {
-            debug(messagePrefix + ': Word too long, ' + word.length + ' of ' + minWordLength);
-        } else if (length > maxLength) {
-            debug(messagePrefix + ': Password too long, ' + length + ' of ' + maxLength);
-        } else if (attemptedWords.length > maxWords) {
-            debug(messagePrefix + ': Too many words, ' + attemptedWords.length + ' of ' + maxWords);
-        } else if (length < minLength) {
-            debug(messagePrefix + ': Word OK, but phrase too short, ' + length + ' of ' + minLength);
-            currentWords.push(word);
-        } else if (attemptedWords.length < minWords) {
-            debug(messagePrefix + ': Word OK, but too few words, ' + attemptedWords.length + ' of ' + minWords);
-            currentWords.push(word);
-        } else if (greedy) {
-            debug(messagePrefix + ': Password OK, but greedy wants more.');
-            currentWords.push(word);
-        } else {
-            debug(messagePrefix + ': Password OK!');
-            return attemptedPassword;
-        }
+  if (minWords < 1) throw new Error('minWords must be greater than zero.');
+  if (minLength < 1) throw new Error('minWords must be greater than zero.');
+  if (minWordLength < 1) throw new Error('minWordLength must be greater than zero.');
+
+  if (opts.maxWordLength > opts.maxLength) throw new Error('maxWordLength should not be greater than maxLength.');
+  if (opts.minWordLength * opts.minWords > opts.maxLength) throw new Error(`minWordLength[${opts.minWordLength}] times minWords[${opts.minWords}] will always produce longer phrases than maxLength[${opts.maxLength}].`);
+
+  if (opts.maxWords < minWords) { debug('maxWords less than minWords, setting equal to minWords'); opts.maxWords = minWords; }
+  if (opts.maxLength < minLength) { debug('maxLength less than minLength, setting equal to minLength'); opts.maxLength = minLength; }
+  if (opts.maxWordLength < minWordLength) { debug('mmaxWordLength less than minWordLength, setting equal to minWordLength'); opts.maxWordLength = minWordLength; }
+}
+
+function randomInt(lowInclusive, highExclusive) {
+  return Math.floor(Math.random() * (highExclusive - lowInclusive) + lowInclusive);
+}
+
+function yawg(opts, cb) {
+  const params = { ...{}, ...defaultOpts, ...opts };
+
+  const { delimiter, minWords, maxWords, minLength, maxLength, minWordLength, maxWordLength, attempts } = params;
+  const randomWordCount = randomInt(minWords, maxWords + 1)
+  const candidateWordsStartIdx = words.findIndex(w => w.length >= minWordLength);
+  const candidateWordsEndIdx = words.findIndex(w => w.length > maxWordLength) - 1;
+
+  debug(`startIdx: ${candidateWordsStartIdx} endIdx: ${candidateWordsEndIdx}`)
+
+  // Up to N attempts at generating a phrase, to avoid infinite loop
+  for (let i = 0; i < attempts; i++) {
+    const chosenWords = _.times(randomWordCount, (idx) => {
+      const randomLineIndex = randomInt(candidateWordsStartIdx, candidateWordsEndIdx + 1);
+      return words[randomLineIndex];
+    });
+
+    const phrase = chosenWords.join(delimiter);
+    const messagePrefix = `Attempt #${(i + 1)}: phrase[${phrase}]`;
+
+    if (phrase.length < minLength) {
+      debug(`${messagePrefix}: Phrase too short.`);
     }
-    throw new Error('Failed to generate phrase.');
+    else if (phrase.length > maxLength) {
+      debug(`${messagePrefix}: Phrase too long.`);
+    } else {
+      debug(`${messagePrefix}: OK!`);
+      return phrase;
+    }
+  }
+  throw new Error('Failed to generate phrase within constraints.');
 }
 
 yawg.validateOptions = validateOptions;
+yawg.defaultOpts = defaultOpts
 
 exports = module.exports = yawg;
