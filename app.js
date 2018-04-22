@@ -65,7 +65,6 @@ debug(util.inspect(argv));
 
 yawg.validateOptions(argv);
 
-console.log('Phrase count: ' + count);
 let failCount = 0;
 for (let i = 0; i < count; i++) {
     try {
