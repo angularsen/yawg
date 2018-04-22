@@ -1,6 +1,6 @@
 {
   "name": "yawg",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Yet Another Word Generator - Node CLI to generate XKCD inspired passwords, using common English words that are easy to spell",
   "repository": "https://github.com/anjdreas/yawg",
   "main": "lib.js",
