@@ -35,7 +35,8 @@ const def = yawg.defaultOpts;
 const count = argv.count;
 const help = argv.help;
 
-const helpText = `${titleColor('yawg - Yet Another Word Generator')}
+if (help) {
+    const helpText = `${titleColor('yawg - Yet Another Word Generator')}
 
 version: ${version}
 
@@ -56,7 +57,6 @@ ${paramColor('--help')}              ${descColor("Show this screen")}
     alias: -h
 `;
 
-if (help) {
     console.log(helpText);
     return;
 }
@@ -65,6 +65,7 @@ debug(util.inspect(argv));
 
 yawg.validateOptions(argv);
 
+console.log('Phrase count: ' + count);
 let failCount = 0;
 for (let i = 0; i < count; i++) {
     try {

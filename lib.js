@@ -3,7 +3,6 @@
 const fs = require('fs');
 const debug = require('debug')('yawg');
 const _ = require('underscore');
-const util = require('util');
 const path = require('path');
 
 const defaultOpts = {
@@ -22,7 +21,7 @@ const defaultOpts = {
 // this package in command-line scripts or a stand-alone service
 // so it doesn't bloat your main application.
 const dictionaryFilePath = path.join(__dirname, 'dictionary/first20hours/2014-12-17-google-10000-english-usa.txt');
-const words = fs.readFileSync(dictionaryFilePath).toString().split("\n");
+const words = fs.readFileSync(dictionaryFilePath).toString()/*.replace("\r\n", "\n")*/.split("\n");
 
 function isString(obj) {
   return (typeof obj === 'string' || obj instanceof String);
@@ -37,7 +36,6 @@ function ensureString(obj, paramName) {
 }
 
 function validateOptions(opts) {
-
   const { delimiter, minWords, minLength, minWordLength, attempts } = opts;
 
   ensureString(delimiter, 'delimiter');
@@ -66,23 +64,23 @@ function randomInt(lowInclusive, highExclusive) {
   return Math.floor(Math.random() * (highExclusive - lowInclusive) + lowInclusive);
 }
 
-function yawg(opts, cb) {
-  const params = { ...{}, ...defaultOpts, ...opts };
-
-  const { delimiter, minWords, maxWords, minLength, maxLength, minWordLength, maxWordLength, attempts } = params;
+function yawg(opts) {
+  const opts2 = { ...{}, ...defaultOpts, ...opts };
+  const { delimiter, minWords, maxWords, minLength, maxLength, minWordLength, maxWordLength, attempts } = opts2;
   const randomWordCount = randomInt(minWords, maxWords + 1)
   const candidateWordsStartIdx = words.findIndex(w => w.length >= minWordLength);
   const candidateWordsEndIdx = words.findIndex(w => w.length > maxWordLength) - 1;
 
   debug(`startIdx: ${candidateWordsStartIdx} endIdx: ${candidateWordsEndIdx}`)
 
+  const randomWord = () => {
+    const idx = randomInt(candidateWordsStartIdx, candidateWordsEndIdx + 1);
+    return words[idx];
+  }
+
   // Up to N attempts at generating a phrase, to avoid infinite loop
   for (let i = 0; i < attempts; i++) {
-    const chosenWords = _.times(randomWordCount, (idx) => {
-      const randomLineIndex = randomInt(candidateWordsStartIdx, candidateWordsEndIdx + 1);
-      return words[randomLineIndex];
-    });
-
+    const chosenWords = _.times(randomWordCount, randomWord);
     const phrase = chosenWords.join(delimiter);
     const messagePrefix = `Attempt #${(i + 1)}: phrase[${phrase}]`;
 
