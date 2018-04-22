@@ -1,3 +1,5 @@
+https://www.npmjs.com/package/yawg
+
 ### Install
 Install `yawg` globally with [NPM package manager](https://docs.npmjs.com/cli/npm) included with [NodeJS](https://nodejs.org/en/):
 ```
