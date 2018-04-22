@@ -99,6 +99,6 @@ try {
 
 ### Troubleshooting
 1. Sometimes Yarn on Windows does not properly configure the PATH environment variable. [Make sure PATH is properly set up](https://github.com/yarnpkg/yarn/issues/1648).
-  * Find the global yarn bin path: `$ yarn global bin   # Ex: C:\Users\Andreas\AppData\Local\Yarn\bin`
-  * Append path to PATH env variable
+    * Find the global yarn bin path: `$ yarn global bin   # Ex: C:\Users\Andreas\AppData\Local\Yarn\bin`
+    * Append path to PATH env variable
 
