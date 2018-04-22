@@ -1,0 +1,23 @@
+* text=auto
+
+dictionary/first20hours/2014-12-17-google-10000-english-usa.txt        text eol=lf
+
+# Graphics
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.tif binary
+*.tiff binary
+*.ico binary
+# SVG treated as an asset (binary) by default. If you want to treat it as text,
+# comment-out the following line and uncomment the line after.
+*.svg binary
+#*.svg text
+*.eps binary
+
+# Avoid messing up GitHub statistics on code language by excluding sample projects
+UnitsNet.TestApps.Uwp.JavaScript/* linguist-vendored
+UnitsNet.TestApps.Uwp.WinJS/* linguist-vendored
+UnitsNet.TestApps.Uwp.Csharp/* linguist-vendored
+
