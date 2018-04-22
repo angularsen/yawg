@@ -1,74 +1,82 @@
-#### Install
-`$ npm install -g yawg`
-
-then run it
-
-`$ yawg`
-
+### Install
+Install `yawg` globally with [NPM package manager](https://docs.npmjs.com/cli/npm) included with [NodeJS](https://nodejs.org/en/):
 ```
-aspect enabled
-orleans over
-expansion gem
-drinks luxury
-claim domain
-sentence link
-stationery dans
-chronicles ppc
-agency then
-stock dominant
+$ npm install -g yawg        
 ```
 
+Alternatively with [Yarn package manager](https://yarnpkg.com/):
+```
+$ yarn global add yawg
+```
 
-#### Options
-`$ yawg -h`
+Then run it:
 
 ```
+$ yawg
+register office windows
+```
+
+### Parameters
+```
+$ yawg -h
 yawg - Yet Another Word Generator
 
-version: 1.1.0
+version: 1.2.3
 
 Required parameters: (none)
 
 Optional parameters:
 --delimiter=' '     Delimiter between words
---minWords=2        Min number of words
---maxWords=4        Max number of words
---minLength=8       Min length of phrase
---maxLength=15      Max length of phrase
---minWordLength=2   Min word length
---maxWordLength=10  Max word length
---attempts=1e4      Max attempts per phrase
---greedy=false      Try to maximize phrase length
---count=10          Number of phrases to generate
+--minLength=12      Min length of phrase
+--maxLength=25      Max length of phrase
+--minWords=3        Min number of words
+--maxWords=5        Max number of words
+--minWordLength=1   Min word length
+--maxWordLength=8   Max word length
+--attempts=10000    Max attempts per phrase
+--count=1           Number of phrases to generate
     alias: -n
 --help              Show this screen
     alias: -h
 ```
 
-#### Copy to clipboard
-`$ yawg -n 1 | clip` puts "prediction mat" in clipboard
+### Examples
+#### Copy phrase to clipboard
+`$ yawg | clip`
 
-#### Longer phrases
-`$ yawg --minWords=4 --maxLength=40`
-
+#### Multiple phrases
 ```
-sip ntsc need file
-shelter court head happens
-cook trips world german
-xbox length receiving notebook
-british caroline mixing primary
-antivirus berry daily big
-shortcuts stunning message neon
-vegetation defects antiques framed
-invoice junk holland iron
-ion ukraine soap beth
+$ yawg -n 10
+dans mainly fly tray luke
+yen craft marco ill jobs
+ran situated bouquet
+toys que wrist achieve
+bless worry filme craft
+justin shame toronto
+trader reset dui gen lead
+str disks antigua nest
+marvel enables moms
+trusted cleared unit
 ```
 
-Without specifying a longer maxLength, you will typically run into failed attempts of generating phrases when it is not able to find 4 words to fit in the default maxLength of 15. You could also try increasing `attempts` to a larger value.
+#### Short words only
+```
+$ yawg -n3 --maxWordLength=4
+fork my core
+mat fair hong
+bras arm foul
+```
 
-#### Node API
-You can require this package in your NodeJS code and pass in the options as an
-object argument.
+#### Long phrases
+```
+$ yawg -n3 --minLength=30
+chose filling gotten phys incl
+overseas vip intake bonds kurt
+reader cock staff directed toe
+```
+
+### Node API
+You can require this package in your NodeJS code and pass in the options as an object argument.
 
 Example:
 ```js
@@ -77,16 +85,20 @@ Example:
 var yawg = require('yawg');
 
 try {
-    var password = yawg({
+    var phrase = yawg({
         minWords: 4,
         maxLength: 50,
         attempts: 100,
     });
-    console.log('Password is ' + password);
+    console.log('Phrase is: ' + phrase);
 } catch (err) {
-    // handle error here
-    // either a problem with the provided options
-    // or a password couldn't be generated after the
-    // given number of attempts
+    // Not able to produce a phrase that mathed the constraints of the parameters.
+    // Example: --maxLength=10 --minWords=5 --minWordLength=3  # Can only generate phrase of minimum length 5*13=15
 }
 ```
+
+### Troubleshooting
+1. Sometimes Yarn on Windows does not properly configure the PATH environment variable. [Make sure PATH is properly set up](https://github.com/yarnpkg/yarn/issues/1648).
+  * Find the global yarn bin path: `$ yarn global bin   # Ex: C:\Users\Andreas\AppData\Local\Yarn\bin`
+  * Append path to PATH env variable
+
