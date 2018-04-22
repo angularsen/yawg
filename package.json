@@ -26,6 +26,8 @@
     "underscore": "^1.8.3"
   },
   "scripts": {
+    "major-release": "npm version major && npm publish && git push --follow-tags",
+    "minor-release": "npm version minor && npm publish && git push --follow-tags",
     "patch-release": "npm version patch && npm publish && git push --follow-tags",
     "test": "node test.js"
   },
