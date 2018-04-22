@@ -69,10 +69,10 @@ bras arm foul
 
 #### Long phrases
 ```
-$ yawg -n3 --minLength=30
-chose filling gotten phys incl
-overseas vip intake bonds kurt
-reader cock staff directed toe
+$ yawg -n3 --minLength=25 --maxLength=50
+offices language myrtle altered
+recipes emission involves audience brighton
+detailed exhibit industry
 ```
 
 ### Node API
