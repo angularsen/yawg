@@ -1,3 +1,6 @@
+# YAWG - Yet Another Word Generator
+Node CLI to generate XKCD inspired passwords, using common English words that are easy to spell and type in manually.
+
 https://www.npmjs.com/package/yawg
 
 ### Install
